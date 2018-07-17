@@ -78,7 +78,7 @@ module PagarMe
     def request_params
       {
         method:       method,
-        user:         PagarMe.api_key,
+        user:         parameters["live"] ? PagarMe.api_key : PagarMe.test_api_key,
         password:     'x',
         url:          full_api_url,
         payload:      MultiJson.encode(parameters),
