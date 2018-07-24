@@ -22,9 +22,9 @@ module PagarMe
         self.new(*args, &block).create
       end
 
-      def find_by_id(id)
+      def find_by_id(id, params = Hash.new)
         raise RequestError.new('Invalid ID') unless id.present?
-        PagarMe::Request.get(url id).call
+        PagarMe::Request.get(url(id), params: params).call
       end
       alias :find :find_by_id
 
