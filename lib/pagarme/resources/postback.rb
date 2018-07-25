@@ -13,12 +13,12 @@ module PagarMe
       def valid_request_signature?(payload, signature)
         kind, raw_signature = signature.split '=', 2
         return false if kind.blank? || raw_signature.blank?
-        signature(payload, kind) == raw_signature
+        (signature(payload, kind) == raw_signature) || (signature(payload, kind, 'test') == raw_signature)
       end
       alias :validate_request_signature :valid_request_signature?
 
-      def signature(payload, hash_method = 'sha1')
-        OpenSSL::HMAC.hexdigest hash_method, PagarMe.api_key, payload
+      def signature(payload, hash_method = 'sha1', environment = 'production')
+        OpenSSL::HMAC.hexdigest hash_method, (environment == 'production') ? PagarMe.api_key : PagarMe.test_api_key, payload
       end
 
       # TODO: Remove deprecated Postback.validate
