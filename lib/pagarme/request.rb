@@ -76,7 +76,6 @@ module PagarMe
 
     protected
     def request_params
-      puts("============ request_params >> #{parameters}")
       {
         method:       method,
         user:         parameters["test"] ? PagarMe.test_api_key : PagarMe.api_key,
